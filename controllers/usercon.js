@@ -18,7 +18,7 @@ exports.signup = async (req, res, next) => {
           console.log(err);
           const newUser = await User.create({ name, email, password: hash });
           res.status(200).json({ data: newUser });
-        //   console.log(newUser);
+          // console.log(newUser);
         });
       } catch (err) {
         console.log("error show")

@@ -22,7 +22,7 @@ exports.purchasePremium = async (req, res, next) => {
             throw new Error(JSON.stringify(err));
          
           }
-            const userId=req.id;
+            const UserSignUpId=req.id;
             const orderid=order.id;
             const status="PENDING";
             // console.log(orderId);
@@ -31,7 +31,7 @@ exports.purchasePremium = async (req, res, next) => {
            
            
               
-              purchaseOrder.create({userId,orderid,status}).then((orders)=>{
+              purchaseOrder.create({UserSignUpId,orderid,status}).then((orders)=>{
 
                 // console.log("successfull",orders)
                 res.status(200).json({ orders, key_id: rzp.key_id })

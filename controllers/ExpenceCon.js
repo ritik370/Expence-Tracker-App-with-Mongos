@@ -10,8 +10,7 @@ exports.addExpense = async (req, res, next) => {
     let amount = req.body.amount;
     let description = req.body.description;
     let category = req.body.category;
-    // console.log(req.body);
-    // console.log("user.......htftf",req.id)
+
     let userId=req.id;
   
     try {
@@ -19,7 +18,7 @@ exports.addExpense = async (req, res, next) => {
         amount,
         description,
         category,
-        userId
+        UserSignUpId:req.id
       }).then((expense) => {
         const totalvalue= User.findOne({ where:{id:req.id}}).then((res)=>{
        const totalExpenses = Number(res.dataValues.totalExpenses) + Number(amount);
@@ -42,8 +41,8 @@ exports.addExpense = async (req, res, next) => {
     const limit = Number(req.query.limit) || 5;
   
     try {
-      let table = await Expense.findAll({ where: { userId: req.id } });
-      const NewData  = await Expense.findAll({ where: { userId: req.id } ,
+      // let table = await Expense.findAll({ where: { UserSignUpId: req.id } });
+      const NewData  = await Expense.findAll({ where: { UserSignUpId: req.id } ,
         offset: (page - 1) * limit,
         limit: limit,
       });
@@ -54,7 +53,7 @@ exports.addExpense = async (req, res, next) => {
         currentPage: page,
         nextPage: page + 1,
         previouspage: page - 1,
-        lastpage: Math.ceil(table.length / limit),
+        lastpage: Math.ceil(NewData.length / limit),
       });
     } catch (error) {
       console.log("error:", error);

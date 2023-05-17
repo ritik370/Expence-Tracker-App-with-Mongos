@@ -13,17 +13,17 @@ exports.forgetPassword = async (req, res, next) => {
 //   try {
     const email = req.body.email;
     const user = await User.findOne({ where: { email: email } });
-    // console.log(user);
+    console.log(user);
    
     if (user) {
-      const userId = user.id;
+      const UserSignUpId = user.id;
       const id = uuid.v4();
-      console.log(id +" "+userId)
+      console.log(id +" "+UserSignUpId)
     
      await ForgetPassword.create({
         id,
         isactive: true,
-        userId: userId,
+        UserSignUpId
       }).catch((err) => {
         console.log(err);
         throw new Error(err);
@@ -34,7 +34,7 @@ exports.forgetPassword = async (req, res, next) => {
 
       const tranEmailApi = new Sib.TransactionalEmailsApi()
       const sender = {
-          email: 'Gritik3700@gmail.com',
+          email: 'gritik3700@gmail.com',
           name: 'Ritik',
       }
       const receivers = [
@@ -48,14 +48,21 @@ exports.forgetPassword = async (req, res, next) => {
           to: receivers,
           subject: 'Reset Password',
           textContent: `Forget Password`,
-          htmlContent: `
-          <a href="http://localhost:5500/password/resetpassword/${id}">Reset password</a>`,
+          htmlContent: `<a href="http://localhost:5500/password/resetpassword/${id}">Reset password</a>`,
         
       })
       .then((success)=>{
+        console.log("your mail successfully sended",+success);
         res.status(200).json({ message: "Link to reset password sent to your mail ",success: true,});
       })
-      .catch(console.log)
+      .catch((error)=>{
+        console.log("your mail successfully sended");
+
+        console.log(error)
+
+      })
+        
+      
 
 
 

@@ -2,14 +2,14 @@ const Sequelize = require("sequelize");
 
 const sequelize = require("../util/database");
 
-const Order = sequelize.define("orders", {
+const Order = sequelize.define("premiumOrders", {
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     allowNull: false,
     primaryKey: true,
   },
-  userId: Sequelize.STRING,
+  // userId: Sequelize.STRING,
   orderid: Sequelize.STRING,
   status: Sequelize.STRING,
 
